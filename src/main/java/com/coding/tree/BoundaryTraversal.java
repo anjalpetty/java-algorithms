@@ -3,41 +3,14 @@ package com.coding.tree;
 import java.util.ArrayList;
 import java.util.List;
 
+// leetcode: 545 Boundary of a binary tree in anti-clockwise direction
+/* steps
+  01. print root node
+  02. print left boundary in top-down manner, except root and leaf nodes
+  03. print leaf nodes in inorder manner
+  04. pring right boundary in bottom up manner, except root and leaf nodes
+ */
 public class BoundaryTraversal {
-
-  public static int maxLevel = 0;
-
-  public static List<Integer> leftSideView(node root, int level, List<Integer> output) {
-    if (root == null) {
-      return output;
-    }
-
-    if (maxLevel < level) {
-      output.add(root.data);
-      maxLevel = level;
-    }
-
-    leftSideView(root.left, level + 1, output);
-//    rightSideView(root.left, level + 1, output);
-
-    return output;
-  }
-
-  public static List<Integer> rightSideView(node root, int level, List<Integer> output) {
-    if (root == null) {
-      return output;
-    }
-
-    if (maxLevel < level) {
-      output.add(root.data);
-      maxLevel = level;
-    }
-
-    rightSideView(root.right, level + 1, output);
-//    rightSideView(root.left, level + 1, output);
-
-    return output;
-  }
 
   public static void main(String[] args) {
     /*
@@ -75,14 +48,55 @@ public class BoundaryTraversal {
     root.right.right.left = new node(11);
     root.right.right.left.left = new node(14);
 
-    PrintTree.print("", root, false);
+    printBoundary(root);
+  }
 
-    List<Integer> output = new ArrayList<>();
-//    leftSideView(root, 0, output);
-    rightSideView(root, 0, output);
+  public static void printBoundary(node root) {
+    if (root != null) {
+      System.out.print(root.data + " ");
+      printBoundaryLeft(root.left);
 
-    for (int i : output) {
-      System.out.print(i + " ");
+      printLeaves(root.left);
+      printLeaves(root.right);
+
+      printBoundaryRight(root.right);
+    }
+  }
+
+  public static void printBoundaryLeft(node root) {
+    if (root == null) {
+      return;
+    }
+    if (root.left != null) {
+      System.out.print(root.data + " ");
+      printBoundaryLeft(root.left);
+    } else if (root.right != null) {
+      System.out.print(root.data + " ");
+      printBoundaryLeft(root.right);
+    }
+  }
+
+  public static void printLeaves(node root) {
+    if (root == null) {
+      return;
+    }
+    printLeaves(root.left);
+    if (root.left == null && root.right == null) {
+      System.out.print(root.data + " ");
+    }
+    printLeaves(root.right);
+  }
+
+  public static void printBoundaryRight(node root) {
+    if (root == null) {
+      return;
+    }
+    if (root.right != null) {
+      printBoundaryRight(root.right);
+      System.out.print(root.data + " ");
+    } else if (root.left != null) {
+      printBoundaryRight(root.left);
+      System.out.print(root.data + " ");
     }
   }
 }
