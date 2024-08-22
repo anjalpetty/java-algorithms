@@ -53,18 +53,24 @@ public class NumberProblems {
     int rotated = reverseNum(combined);
     return rotated;
   }
+
   // reverse a number
-  public static int reverseNum(int n) {
-    if (n<10 && n>-10) {
-      System.out.print(n);
-      return n;
+  // Leetcode: 7
+  public static int reverseNum(int x) {
+    boolean isNegative = false;
+    if (x < 0) {
+      isNegative = true;
+      x = Math.abs(x);
     }
-    int sum=0;
-    while (n>0) {
-      sum = (sum * 10) + (n % 10);
-      n=n/10;
+    long sum = 0;
+    while (x > 0) {
+      sum = (sum * 10) + (x % 10);
+      x /=10;
     }
-    return sum;
+    if (sum > Integer.MAX_VALUE || sum < Integer.MIN_VALUE) {
+      return 0;
+    }
+    return isNegative ? -1 * (int)sum : (int)sum;
   }
   // count number of digits in a given number
   public static int countDigits(int n) {
