@@ -1,11 +1,11 @@
 package com.coding.tree;
 
-public class node {
+public class tnode {
   public int data;
-  public node left;
-  public node right;
+  public tnode left;
+  public tnode right;
 
-  public node(int d) {
+  public tnode(int d) {
     data = d;
     left = null;
     right = null;

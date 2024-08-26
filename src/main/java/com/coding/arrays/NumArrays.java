@@ -95,6 +95,7 @@ public class NumArrays {
     return a;
   }
 
+  // Leetcode: 167
   // find the indices of two numbers add up to a target
   // given array is sorted in ascending order
   // NOTE: the array is sorted in ascending order
@@ -116,6 +117,35 @@ public class NumArrays {
     }
   }
 
+  /*
+   leetcode 15. 3Sum
+   Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k,
+   and nums[i] + nums[j] + nums[k] == 0.
+
+   Notice that the solution set must not contain duplicate triplets.
+   */
+  public static List<List<Integer>> threeSum(int[] nums) {
+
+    // pick one index and consider remaining as two sum problem, continue to the rest.
+    Set<List<Integer>> hash = new HashSet<>(); // this is important to avoid duplicate triplets
+    Arrays.sort(nums);
+    for (int i=0; i<nums.length-2; i++) {
+      int left = i+1;
+      int right = nums.length-1;
+      while (left < right) {
+        int threeSum = nums[i] + nums[left] + nums[right];
+        if (threeSum == 0) {
+          hash.add(Arrays.asList(nums[i], nums[left], nums[right]));
+          left ++; right --;
+        } else if (threeSum > 0) {
+          right--;
+        } else if (threeSum < 0) {
+          left++;
+        }
+      }
+    }
+    return new ArrayList<>(hash);
+  }
 
   // leetcode 121. best time to buy and sell stock
   // return maximum profit, return 0 otherwise.
@@ -361,44 +391,6 @@ public class NumArrays {
     System.out.println(first + ", " + last);
   }
 
-  /*
-   leetcode 15. 3Sum
-   Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k,
-   and nums[i] + nums[j] + nums[k] == 0.
-
-   Notice that the solution set must not contain duplicate triplets.
-   */
-  public static List<List<Integer>> threeSum(int[] nums) {
-
-    List<List<Integer>> list = new ArrayList<>();
-    Arrays.sort(nums);
-    for (int i=0; i<nums.length; i++) {
-
-      int a=nums[i];
-      if (i> 0 && a == nums[i-1]) {
-        continue;
-      }
-
-      int left = i+1;
-      int right = nums.length-1;
-      while (left < right) {
-        int threeSum = a + nums[left] + nums[right];
-        if (threeSum > 0) {
-          right--;
-        } else if (threeSum < 0) {
-          left++;
-        } else {
-          list.add(new ArrayList<>(Arrays.asList(a, nums[left], nums[right])));
-          left++;
-          while (nums[left] == nums[left-1] && left < right) {
-            left++;
-          }
-        }
-      }
-    }
-    return list;
-  }
-
   // reverse array in-place
   public static void reverse(int[] arr, int start, int end) {
     while (start < end) {
@@ -519,5 +511,58 @@ public class NumArrays {
       result[k++] = priorityQueue.remove();
     }
     return result;
+  }
+
+  // Leetcode 41: first missing positive
+  /*
+  Given an unsorted integer array nums. Return the smallest positive integer that is not present in nums.
+  You must implement an algorithm that runs in O(n) time and uses O(1) auxiliary space.
+  Example 1:
+  Input: nums = [1,2,0]
+  Output: 3
+  Explanation: The numbers in the range [1,2] are all in the array.
+
+  Example 2:
+  Input: nums = [3,4,-1,1]
+  Output: 2
+  Explanation: 1 is in the array but 2 is missing.
+   */
+  public static int firstMissingPositive(int[] nums) {
+    Arrays.sort(nums);
+    int missing = 1; // assume 1 is missing initially
+    for (int num: nums) {
+      if (num > 0) {
+        if (num == missing) {
+          missing ++;
+        } else if (num > missing) {
+          break;
+        }
+      }
+    }
+    return missing;
+  }
+
+  // Leetcode: 303 Range sum Query - Immutable
+  /*
+  Calculate the sum of the elements of nums between indices left and right inclusive where left <= right
+  Input
+  ["NumArray", "sumRange", "sumRange", "sumRange"]
+  [[[-2, 0, 3, -5, 2, -1]], [0, 2], [2, 5], [0, 5]]
+  Output
+  [null, 1, -1, -3]
+   */
+  public static int rangeSum(int[] nums, int left, int right) {
+    // precalculate range sum first
+    int[] presum = new int[nums.length];
+    for (int i=0; i<nums.length; i++) {
+      if (i==0) {
+        presum[i] = nums[i];
+      } else {
+        presum[i] = presum[i-1] + nums[i];
+      }
+    }
+
+    // return range only
+    return left == 0 ? presum[right] - 0 : presum[right] - presum[left-1];
   }
 }

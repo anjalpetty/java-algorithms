@@ -11,6 +11,7 @@ import java.util.*;
      /      \
     7        6
 */
+
 public class TreeProblems {
 
   public static int maxLevel = 0;
@@ -21,17 +22,17 @@ public class TreeProblems {
 
   public static void main(String[] args) {
 
-    node root = new node(5);
-    root.left = new node(9);
-    root.right = new node(3);
+    tnode root = new tnode(5);
+    root.left = new tnode(9);
+    root.right = new tnode(3);
 
-    root.left.left = new node(4);
-    root.left.right = new node(2);
+    root.left.left = new tnode(4);
+    root.left.right = new tnode(2);
 
-    root.right.right = new node(1);
+    root.right.right = new tnode(1);
 
-    root.left.left.left = new node(7);
-    root.left.right.right = new node(6);
+    root.left.left.left = new tnode(7);
+    root.left.right.right = new tnode(6);
 
     System.out.println("inOrder");
     inOrder(root);
@@ -102,14 +103,16 @@ public class TreeProblems {
     System.out.println("rootToLeafMax   : " + rootToLeafMax(root));
     System.out.println("rootToLeafMaxIterative: " + rootToLeafMaxIter(root));
     System.out.println("11 existsInTree : " + existsInTree(root, 11));
-    System.out.println("hasPath         : " + hasPath(root, 24)); // (5 + 11 + 2 + 6)
+    System.out.println("hasPathSum      : " + hasPathSum(root, 24)); // (5 + 11 + 2 + 6)
+    List<List<Integer>> result = pathSumII(root, 22);
+    System.out.println("hasPathSumII    : " + result); // (5 + 11 + 2 + 6)
 //    System.out.println("kthLargetNode: " + kthLargestNode(root, 3).data);
 
-    node root1 = new node(1);
-    root1.left = new node(2);
-    node root2 = new node(1);
+    tnode root1 = new tnode(1);
+    root1.left = new tnode(2);
+    tnode root2 = new tnode(1);
     root2.left = null;
-    root2.right = new node(2);
+    root2.right = new tnode(2);
 
     System.out.println("\n" + "isSame: " + isSameTree(root1, root2));
 
@@ -121,9 +124,9 @@ public class TreeProblems {
     printTree(root);
   }
 
-  public static node insertNode(node current, int d) {
+  public static tnode insertNode(tnode current, int d) {
     if (current == null) {
-      return new node(d);
+      return new tnode(d);
     } else if (d > current.data) {
       current.right = insertNode(current.right, d);
     } else if (d < current.data) {
@@ -132,7 +135,7 @@ public class TreeProblems {
     return current;
   }
 
-  public static void inOrder(node current) {
+  public static void inOrder(tnode current) {
     if (current != null) {
       inOrder(current.left);
       System.out.print(current.data + " ");
@@ -140,7 +143,7 @@ public class TreeProblems {
     }
   }
 
-  public static void preOrder(node current) {
+  public static void preOrder(tnode current) {
     if (current != null) {
       System.out.print(current.data + " ");
       preOrder(current.left);
@@ -148,7 +151,7 @@ public class TreeProblems {
     }
   }
 
-  public static void postOrder(node current) {
+  public static void postOrder(tnode current) {
     if (current != null) {
       postOrder(current.left);
       postOrder(current.right);
@@ -156,7 +159,7 @@ public class TreeProblems {
     }
   }
 
-  public static void traversal(node current) {
+  public static void traversal(tnode current) {
     if (current != null) {
       preOrder[i++] = current.data;
       traversal(current.left);
@@ -166,12 +169,12 @@ public class TreeProblems {
     }
   }
 
-  public static void inOrderIterative(node root) {
+  public static void inOrderIterative(tnode root) {
     if (root == null)
       return;
 
-    Stack<node> s = new Stack<>();
-    node curr = root;
+    Stack<tnode> s = new Stack<>();
+    tnode curr = root;
 
     // traverse the tree
     while (curr != null || s.size() > 0) {
@@ -189,12 +192,12 @@ public class TreeProblems {
     }
   }
 
-  public static void preOrderIterative(node root) {
+  public static void preOrderIterative(tnode root) {
     if (root == null)
       return;
 
-    Stack<node> s = new Stack<>();
-    node curr = root;
+    Stack<tnode> s = new Stack<>();
+    tnode curr = root;
 
     s.push(curr);
     // traverse the tree
@@ -210,13 +213,13 @@ public class TreeProblems {
     }
   }
 
-  public static void postOrderIterative(node root) {
+  public static void postOrderIterative(tnode root) {
     if (root == null)
       return;
 
-    Stack<node> s = new Stack<>();
-    node curr = root;
-    node pre = null;
+    Stack<tnode> s = new Stack<>();
+    tnode curr = root;
+    tnode pre = null;
     // traverse the tree
     while (curr != null || !s.isEmpty()) {
       if (curr != null) {
@@ -236,19 +239,19 @@ public class TreeProblems {
     }
   }
 
-  public static List<Integer> leftSideView(node root) {
+  public static List<Integer> leftSideView(tnode root) {
     List<Integer> list = new ArrayList<>();
     if (root == null) {
       return list;
     }
 
-    Queue<node> queue = new LinkedList<>();
+    Queue<tnode> queue = new LinkedList<>();
     queue.add(root);
     list.add(root.data);
     while (!queue.isEmpty()) {
       int size = queue.size();
       for (int i=0; i<size; i++) {
-        node curr = queue.poll();
+        tnode curr = queue.poll();
         if (curr.left != null) {
           queue.add(curr.left);
         }
@@ -263,7 +266,7 @@ public class TreeProblems {
     return list;
   }
 
-  public static List<Integer> leftSideView(node root, int level, List<Integer> output) {
+  public static List<Integer> leftSideView(tnode root, int level, List<Integer> output) {
     if (root == null) {
       return output;
     }
@@ -277,7 +280,7 @@ public class TreeProblems {
     return output;
   }
 
-  public static List<Integer> rightSideView(node root, int level, List<Integer> output) {
+  public static List<Integer> rightSideView(tnode root, int level, List<Integer> output) {
     if (root == null) {
       return output;
     }
@@ -291,19 +294,19 @@ public class TreeProblems {
     return output;
   }
 
-  public static List<Integer> rightSideView(node root) {
+  public static List<Integer> rightSideView(tnode root) {
     List<Integer> list = new ArrayList<>();
     if (root == null) {
       return list;
     }
 
-    Queue<node> queue = new LinkedList<>();
+    Queue<tnode> queue = new LinkedList<>();
     queue.add(root);
     list.add(root.data);
     while (!queue.isEmpty()) {
       int size = queue.size();
       for (int i=0; i<size; i++) {
-        node curr = queue.poll();
+        tnode curr = queue.poll();
 
         if (curr.right != null) {
           queue.add(curr.right);
@@ -319,7 +322,7 @@ public class TreeProblems {
     return list;
   }
 
-  public static void leftRightEdgesOnly(node root) {
+  public static void leftRightEdgesOnly(tnode root) {
 
     if (root == null) {
       return;
@@ -328,15 +331,15 @@ public class TreeProblems {
 
   }
 
-  public static void printByLevel(node root) {
+  public static void printByLevel(tnode root) {
 
-    Queue<node> queue = new LinkedList<>();
+    Queue<tnode> queue = new LinkedList<>();
     if (root == null) {
       return;
     }
     queue.add(root);
     while (!queue.isEmpty()) {
-      node curr = queue.poll();
+      tnode curr = queue.poll();
       System.out.print(curr.data + " ");
       if (curr.left != null) {
         queue.add(curr.left);
@@ -347,7 +350,7 @@ public class TreeProblems {
     }
   }
 
-  public static boolean printLevel(node root, int level) {
+  public static boolean printLevel(tnode root, int level) {
     // base case
     if (root == null) {
       return false;
@@ -356,7 +359,7 @@ public class TreeProblems {
     if (level == 1) {
       System.out.print(root.data + " ");
 
-      // return true if at least one node is present at a given level
+      // return true if at least one tnode is present at a given level
       return true;
     }
 
@@ -367,25 +370,25 @@ public class TreeProblems {
   }
 
   // leetcode 104. maximum depth of binary tree
-  public static int maxDepthRecur(node root) {
+  public static int maxDepthRecur(tnode root) {
     if (root == null) {
       return 0;
     }
     return 1 + Math.max(maxDepthRecur(root.left), maxDepthRecur(root.right));
   }
 
-  public static int maxDepth(node root) {
+  public static int maxDepth(tnode root) {
     if (root == null) {
       return 0;
     }
 
-    Queue<node> queue = new LinkedList<>();
+    Queue<tnode> queue = new LinkedList<>();
     queue.add(root);
     int depth=0;
     while (!queue.isEmpty()) {
       int size = queue.size();
       for (int i=0; i<size; i++) {
-        node curr = queue.poll();
+        tnode curr = queue.poll();
         if (curr.left != null) {
           queue.add(curr.left);
         }
@@ -399,8 +402,8 @@ public class TreeProblems {
   }
 
   // Minimum Depth of a Binary Tree (easy)
-  // The minimum depth is the number of nodes along the shortest path from the root node to the nearest leaf node.
-  public static int minDepth(node root) {
+  // The minimum depth is the number of nodes along the shortest path from the root tnode to the nearest leaf tnode.
+  public static int minDepth(tnode root) {
     if (root == null || (root.left == null && root.right == null)) {
       return 1;
     }
@@ -408,7 +411,7 @@ public class TreeProblems {
   }
 
   // Function to print level order traversal of a given binary tree
-  public static void levelOrderTraversal(node root) {
+  public static void levelOrderTraversal(tnode root) {
     // start from level 1 — till the height of the tree
     int level = 1;
 
@@ -418,7 +421,7 @@ public class TreeProblems {
     }
   }
 
-  public static int treeSum(node root) {
+  public static int treeSum(tnode root) {
     if (root == null) {
       return 0;
     }
@@ -426,8 +429,8 @@ public class TreeProblems {
     return root.data + treeSum(root.left) + treeSum(root.right);
   }
 
-  public static int treeSumIterative(node root) {
-    Queue<node> queue = new LinkedList<>();
+  public static int treeSumIterative(tnode root) {
+    Queue<tnode> queue = new LinkedList<>();
 
     if (root == null) {
       return 0;
@@ -436,26 +439,26 @@ public class TreeProblems {
     int sum = 0;
     queue.add(root);
     while (!queue.isEmpty()) {
-      node node = queue.poll();
-      sum += node.data;
-      if (node.left != null) {
-        queue.add(node.left);
+      tnode tnode = queue.poll();
+      sum += tnode.data;
+      if (tnode.left != null) {
+        queue.add(tnode.left);
       }
-      if (node.right != null) {
-        queue.add(node.right);
+      if (tnode.right != null) {
+        queue.add(tnode.right);
       }
     }
     return sum;
   }
 
-  public static int sumOfPathNumbers(node root) {
+  public static int sumOfPathNumbers(tnode root) {
     if (root == null) {
       return 0;
     }
     return findPathSum(root, 0);
   }
 
-  public static int findPathSum(node root, int pathSum) {
+  public static int findPathSum(tnode root, int pathSum) {
     if (root == null) {
       return 0;
     }
@@ -467,32 +470,32 @@ public class TreeProblems {
     return findPathSum(root.left, pathSum) + findPathSum(root.right, pathSum);
   }
 
-  public static int treeMin(node root) {
+  public static int treeMin(tnode root) {
     if (root == null) {
       return -1;
     }
 
-    Queue<node> queue = new LinkedList<>();
+    Queue<tnode> queue = new LinkedList<>();
     queue.add(root);
 
     int min = root.data;
     while (!queue.isEmpty()) {
-      node node = queue.poll();
-      if (node.data < min) {
-        min = node.data;
+      tnode tnode = queue.poll();
+      if (tnode.data < min) {
+        min = tnode.data;
       }
-      if (node.left != null) {
-        queue.add(node.left);
+      if (tnode.left != null) {
+        queue.add(tnode.left);
       }
-      if (node.right != null) {
-        queue.add(node.right);
+      if (tnode.right != null) {
+        queue.add(tnode.right);
       }
     }
 
     return min;
   }
 
-  public static int rootToLeafMax(node root) {
+  public static int rootToLeafMax(tnode root) {
     if (root == null) {
       return -1;
     }
@@ -505,32 +508,32 @@ public class TreeProblems {
   }
 
   // root to left (path with maximum value)
-  public static int rootToLeafMaxIter(node root) {
+  public static int rootToLeafMaxIter(tnode root) {
 
     if (root == null) {
       return -1;
     }
-    Queue<node> queue = new LinkedList<>();
+    Queue<tnode> queue = new LinkedList<>();
     queue.add(root);
 
     int sum = 0;
     while (!queue.isEmpty()) {
-      node node = queue.poll();
-      sum += node.data;
-      if (node.left != null && node.right != null) {
-        if (node.left.data > node.right.data) {
-          queue.add(node.left);
+      tnode tnode = queue.poll();
+      sum += tnode.data;
+      if (tnode.left != null && tnode.right != null) {
+        if (tnode.left.data > tnode.right.data) {
+          queue.add(tnode.left);
         }
-      } else if (node.left != null) {
-        queue.add(node.left);
-      } else if (node.right != null) {
-        queue.add(node.right);
+      } else if (tnode.left != null) {
+        queue.add(tnode.left);
+      } else if (tnode.right != null) {
+        queue.add(tnode.right);
       }
     }
     return sum;
   }
 
-  public static boolean isSameTree(node p, node q) {
+  public static boolean isSameTree(tnode p, tnode q) {
     if (p == null && q== null) {
       return true;
     } else if (p == null || q == null) {
@@ -539,7 +542,7 @@ public class TreeProblems {
     return p.data == q.data && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
   }
 
-  public static int treeMax(node root) {
+  public static int treeMax(tnode root) {
     if (root == null) {
       return -1;
     }
@@ -549,14 +552,14 @@ public class TreeProblems {
     return Math.max(Math.max(root.data, leftMax), rightMax);
   }
 
-  public static int treeHeight(node root) {
+  public static int treeHeight(tnode root) {
     if (root == null) {
       return 0;
     }
     return 1 + Math.max(treeHeight(root.left), treeHeight(root.right));
   }
 
-  public static boolean existsInTree(node root, int target) {
+  public static boolean existsInTree(tnode root, int target) {
     if (root == null) {
       return false;
     }
@@ -566,31 +569,52 @@ public class TreeProblems {
     return root.data == target || leftFound || rightFound;
   }
 
-  public static void mirrorTree(node root) {
+  public static void mirrorTree(tnode root) {
     if (root == null) {
       return;
     }
-    node temp = root.left;
+    tnode temp = root.left;
     root.left = root.right;
     root.right = temp;
     mirrorTree(root.left);
     mirrorTree(root.right);
   }
 
-  // find if the tree has a path from root-to-leaf such that the sum of all the node values of that path equals sum
-  public static boolean hasPath(node root, int sum) {
+  // Leetcode: 112 - Path Sum
+  // find if the tree has a path from root-to-leaf such that the sum of all the tnode values of that path equals sum
+  public static boolean hasPathSum(tnode root, int target) {
     if (root == null) {
       return false;
     }
 
-    if (root.data == sum && root.left == null && root.right == null) {
+    if (root.data == target && root.left == null && root.right == null) {
       return true;
     }
 
-    return hasPath(root.left, sum-root.data) || hasPath(root.right, sum-root.data);
+    return hasPathSum(root.left, target-root.data) || hasPathSum(root.right, target-root.data);
   }
 
-  public static void printTree(node root) {
+  // Leetcode: 113 - PathSum II
+  // return root-to-leaf paths where the sum is equal to a targetSum
+  public static List<List<Integer>> pathSumII(tnode root, int targetSum) {
+    List<List<Integer>> result = new ArrayList<>();
+    pathSum(root, targetSum, new ArrayList<>(), result);
+    return result;
+  }
+
+  public static void pathSum(tnode root, int sum, List<Integer> path, List<List<Integer>> result) {
+    if (root == null) {
+      return;
+    }
+    path.add(root.data);
+    if (root.left == null && root.right == null && sum == root.data) {
+      result.add(path);
+    }
+    pathSum(root.left, sum-root.data, new ArrayList<>(path), result);
+    pathSum(root.right, sum-root.data, new ArrayList<>(path), result);
+  }
+
+  public static void printTree(tnode root) {
     if (root == null) {
       return;
     }
@@ -599,7 +623,7 @@ public class TreeProblems {
     }
   }
 
-  public static void printCurrentLevel(node root, int level) {
+  public static void printCurrentLevel(tnode root, int level) {
     if (root == null) {
       return;
     }
@@ -611,7 +635,7 @@ public class TreeProblems {
     }
   }
 
-  public static List<node> inOrder(node root, List<node> list) {
+  public static List<tnode> inOrder(tnode root, List<tnode> list) {
     if (root != null) {
       inOrder(root.left);
       list.add(root);
@@ -620,11 +644,11 @@ public class TreeProblems {
     return list;
   }
 
-  public static node kthLargestNode(node root, int k) {
+  public static tnode kthLargestNode(tnode root, int k) {
     if (root == null) {
       return null;
     }
-    List<node> list = new ArrayList<>();
+    List<tnode> list = new ArrayList<>();
     list = inOrder(root, list);
 
     if (k>list.size()) {

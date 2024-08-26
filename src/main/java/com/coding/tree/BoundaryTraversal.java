@@ -1,8 +1,5 @@
 package com.coding.tree;
 
-import java.util.ArrayList;
-import java.util.List;
-
 // leetcode: 545 Boundary of a binary tree in anti-clockwise direction
 /* steps
   01. print root node
@@ -26,32 +23,32 @@ public class BoundaryTraversal {
      */
     // print boundary
     // expected output - 1, 2, 4, 8, 12, 13, 10, 6, 14, 11, 7, 3
-    node root = new node(1);
+    tnode root = new tnode(1);
 
-    root.left = new node(2);
-    root.right = new node(3);
+    root.left = new tnode(2);
+    root.right = new tnode(3);
 
-    root.left.left = new node(4);
-    root.left.right = new node(5);
+    root.left.left = new tnode(4);
+    root.left.right = new tnode(5);
 
-    root.left.left.left = new node(8);
-    root.left.left.right = new node(9);
+    root.left.left.left = new tnode(8);
+    root.left.left.right = new tnode(9);
 
-    root.left.left.right.left = new node(12);
-    root.left.left.right.right = new node(13);
+    root.left.left.right.left = new tnode(12);
+    root.left.left.right.right = new tnode(13);
 
-    root.left.right.right = new node(10);
+    root.left.right.right = new tnode(10);
 
-    root.right.left = new node(6);
-    root.right.right = new node(7);
+    root.right.left = new tnode(6);
+    root.right.right = new tnode(7);
 
-    root.right.right.left = new node(11);
-    root.right.right.left.left = new node(14);
+    root.right.right.left = new tnode(11);
+    root.right.right.left.left = new tnode(14);
 
     printBoundary(root);
   }
 
-  public static void printBoundary(node root) {
+  public static void printBoundary(tnode root) {
     if (root != null) {
       System.out.print(root.data + " ");
       printBoundaryLeft(root.left);
@@ -63,7 +60,7 @@ public class BoundaryTraversal {
     }
   }
 
-  public static void printBoundaryLeft(node root) {
+  public static void printBoundaryLeft(tnode root) {
     if (root == null) {
       return;
     }
@@ -76,7 +73,7 @@ public class BoundaryTraversal {
     }
   }
 
-  public static void printLeaves(node root) {
+  public static void printLeaves(tnode root) {
     if (root == null) {
       return;
     }
@@ -87,7 +84,7 @@ public class BoundaryTraversal {
     printLeaves(root.right);
   }
 
-  public static void printBoundaryRight(node root) {
+  public static void printBoundaryRight(tnode root) {
     if (root == null) {
       return;
     }

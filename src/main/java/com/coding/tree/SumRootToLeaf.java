@@ -15,24 +15,24 @@ package com.coding.tree;
 public class SumRootToLeaf {
 
   public static void main(String[] args) {
-    node root = new node(1);
-    root.left = new node(0);
-    root.left.left = new node(0);
-    root.left.right = new node(1);
+    tnode root = new tnode(1);
+    root.left = new tnode(0);
+    root.left.left = new tnode(0);
+    root.left.right = new tnode(1);
 
-    root.right = new node(1);
-    root.right.left = new node(0);
-    root.right.right = new node(1);
+    root.right = new tnode(1);
+    root.right.left = new tnode(0);
+    root.right.right = new tnode(1);
 
 
     System.out.println(sumRootToLeaf(root));
   }
 
-  public static int sumRootToLeaf(node root) {
+  public static int sumRootToLeaf(tnode root) {
     return sumRootToLeaf(root, 0);
   }
 
-  public static int sumRootToLeaf(node root, int sum) {
+  public static int sumRootToLeaf(tnode root, int sum) {
     if (root == null) {
       return 0;
     }

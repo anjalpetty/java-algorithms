@@ -26,6 +26,10 @@ public class NumberProblems {
 
     // count digits of a number
     System.out.println(">> number of digits of 54321: " + countDigits(54321));
+
+    // isHappy Number
+    System.out.println("isHappy Number: " + isHappy(19));
+    // System.out.println("isHappy Number: " + isHappy(2)); // loops endlessly (stack overflow)
   }
 
   // rotate a number of k times
@@ -146,5 +150,19 @@ public class NumberProblems {
       }
       start++;
     }
+  }
+
+  // Leetcode: 202 Happy Number
+  public static boolean isHappy(int n) {
+    if ( n == 1) {
+      return true;
+    }
+    int sum = 0;
+    while ( n > 0) {
+      int r = n % 10;
+      sum += (r * r);
+      n /=10;
+    }
+    return isHappy(sum);
   }
 }

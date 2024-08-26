@@ -17,10 +17,10 @@ import java.util.HashSet;
 */
 public class LongestSubString {
   public static void main(String[] args) {
-    System.out.println(lengthOfLongestSubstring("abcabcbb"));
-    System.out.println(lengthOfLongestSubstring("bbbbb"));
-    System.out.println(lengthOfLongestSubstring("pwwkew"));
-    System.out.println(lengthOfLongestSubstring("aab"));
+    System.out.println(lengthOfLongestSubstring("abcabcbb")); // expects 3
+    System.out.println(lengthOfLongestSubstring("bbbbb"));    // expects 1
+    System.out.println(lengthOfLongestSubstring("pwwkew"));   // expects 3
+    System.out.println(lengthOfLongestSubstring("aab"));      // expects 2
   }
 
   public static int lengthOfLongestSubstring(String s) {

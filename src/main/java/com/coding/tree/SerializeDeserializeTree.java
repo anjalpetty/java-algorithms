@@ -21,25 +21,25 @@ import java.util.Queue;
 public class SerializeDeserializeTree {
 
   public static void main(String[] args) {
-    node root = new node(1);
-    root.left = new node(2);
-    root.right = new node(3);
-    root.right.left = new node(4);
-    root.right.right = new node(5);
+    tnode root = new tnode(1);
+    root.left = new tnode(2);
+    root.right = new tnode(3);
+    root.right.left = new tnode(4);
+    root.right.right = new tnode(5);
 
     System.out.println("serialized: " + serialize(root));
 
-    node root1 = deserialize(serialize(root));
+    tnode root1 = deserialize(serialize(root));
     PrintTree.print("", root1, false);
   }
 
   // Encodes a tree to a single string.
-  public static String serialize(node root) {
+  public static String serialize(tnode root) {
     String serialized = "";
     if (root == null) {
       return "";
     }
-    Queue<node> queue = new LinkedList<>();
+    Queue<tnode> queue = new LinkedList<>();
     queue.add(root);
     int nullCount = 0;
     while (!queue.isEmpty()) {
@@ -49,7 +49,7 @@ public class SerializeDeserializeTree {
       }
       int size = queue.size();
       for (int i=0; i<size; i++) {
-        node curr = queue.poll();
+        tnode curr = queue.poll();
         serialized = serialized + curr.data + ",";
 
         if (curr.left != null) {
@@ -68,12 +68,12 @@ public class SerializeDeserializeTree {
   }
 
   // Decodes your encoded data to tree.
-  public static node deserialize(String data) {
+  public static tnode deserialize(String data) {
     if (data == null || data.isEmpty()) {
       return null;
     }
     String[] arr = data.split(",");
-    node root = new node(Integer.parseInt(arr[0]));
+    tnode root = new tnode(Integer.parseInt(arr[0]));
 
     for (int i=1; i<arr.length; i+=2) {
       if (arr[i].equals("null")) {
